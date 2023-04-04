@@ -1,0 +1,23 @@
+services:
+  _defaults:
+    autowire:      true
+    autoconfigure: true
+    public:        true
+
+
+##### Event Subscriber
+  yipikai.geolocation.event_subscriber:
+    class:          Yipikai\GeolocationBundle\EventSubscriber\GeolocationEventSubscriber
+    arguments:      [ "@yipikai.geolocation" ]
+    tags:
+      - { name: kernel.event_subscriber }
+
+##### Mapping
+  yipikai.geolocation.mapping:
+    class:          Yipikai\GeolocationBundle\Mapping\GeolocationMapping
+    arguments:      [ "@annotations.reader" ]
+
+##### Geolocation
+  yipikai.geolocation:
+    class:          Yipikai\GeolocationBundle\Services\Geolocation
+    arguments:      [ "@yipikai.geolocation.mapping", "@logger" ]

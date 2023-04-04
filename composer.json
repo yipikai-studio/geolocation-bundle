@@ -1,0 +1,22 @@
+{
+  "name":                                 "yipikai/geolocation-bundle",
+  "type":                                 "symfony-bundle",
+  "description":                          "This bundle retrieve latitude and longitude with a postal address since the api adress.gouv.fr",
+  "keywords":                             ["Symfony", "Geolocation", "Data Gouv France"],
+  "license":                              "MIT",
+  "authors": [
+    {
+      "name":                             "Matthieu Beurel",
+      "email":                            "matthieu@yipikai.studio",
+      "homepage":                         "https://yipikai.studio"
+    }
+  ],
+  "require": {
+    "php":                                ">=8.0",
+    "symfony/property-access":            "^5.4",
+    "symfony/monolog-bundle":             "^5.4"
+  },
+  "autoload": {
+    "psr-4": { "Yipikai\\GeolocationBundle\\": "" }
+  }
+}
