@@ -81,14 +81,7 @@ class Geolocation
   {
     $geolocation = array();
     try {
-      $requestParameters = array(
-        "query" =>  array(
-          "q" =>  $adresse
-        )
-      );
-      $httpClient = new NativeHttpClient();
-      $response = $httpClient->request("GET", "https://api-adresse.data.gouv.fr/search", $requestParameters);
-      $responseArray = json_decode($response->getContent(false), true);
+      $responseArray = $this->retrieveInfosByAddress($adresse);
       if(array_key_exists("features", $responseArray))
       {
         if($firstAddress = array_shift($responseArray["features"]))
@@ -105,6 +98,32 @@ class Geolocation
       $this->logger->critical("Geolocation.service -> retrieveByAddress : {$e->getMessage()}");
     }
     return $geolocation;
+  }
+
+
+  /**
+   * retrieveByAddress
+   *
+   * @param string $adresse
+   *
+   * @return array
+   */
+  public function retrieveInfosByAddress(string $adresse): array
+  {
+    $responseArray = array();
+    try {
+      $requestParameters = array(
+        "query" =>  array(
+          "q" =>  $adresse
+        )
+      );
+      $httpClient = new NativeHttpClient();
+      $response = $httpClient->request("GET", "https://api-adresse.data.gouv.fr/search", $requestParameters);
+      $responseArray = json_decode($response->getContent(false), true);
+    } catch(\Exception|TransportExceptionInterface|ClientExceptionInterface|RedirectionExceptionInterface|ServerExceptionInterface $e) {
+      $this->logger->critical("Geolocation.service -> retrieveByAddress : {$e->getMessage()}");
+    }
+    return $responseArray;
   }
 
 
